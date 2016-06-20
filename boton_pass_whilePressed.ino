@@ -43,39 +43,35 @@ void setup() {
 }
 
 void loop(){
-		estadoBoton1 = digitalRead(boton1);
-		estadoBoton2 = digitalRead(boton2);
-		estadoBotonSubmit = digitalRead(botonSubmit);
+	estadoBoton1 = digitalRead(boton1);
+	estadoBoton2 = digitalRead(boton2);
+	estadoBotonSubmit = digitalRead(botonSubmit);
 
-		if(estadoBotonSubmit == HIGH)
+	if(estadoBotonSubmit == HIGH)
+	{
+		if(primerPassword() == 1)
 		{
-			if(primerPassword() == 1)
-			{
-				digitalWrite(led1, HIGH); 
-				banderaEstado = 1;
-			}
-			else {
-			   	// Si no es asi, se apaga
-			   	digitalWrite(led1, LOW);
-			   	banderaEstado = 0;
-			}
-
-			if(segundoPassword() == 1)
-			{
-				digitalWrite(led2, HIGH); 
-				banderaEstado = 2;
-			}
-			else {
-			   		// Si no es asi, se apaga
-			   	digitalWrite(led2, LOW);
-			   	banderaEstado = 0;
-			}
-
-			if(banderaEstado == 2)
-			{
 			digitalWrite(led1, HIGH); 
-			digitalWrite(led2, HIGH); 
-			digitalWrite(led3, HIGH); 
-			}
+			banderaEstado = 1;
 		}
+		else if(segundoPassword() == 1 && banderaEstado != 0)
+		{
+			digitalWrite(led2, HIGH); 
+			banderaEstado = 2;
+		}
+		else
+		{
+			digitalWrite(led1, LOW); 
+			digitalWrite(led2, LOW); 
+			digitalWrite(led3, LOW); 
+			banderaEstado = 0;
+		}
+	}
+
+	if(banderaEstado == 2)
+	{
+		digitalWrite(led1, HIGH); 
+		digitalWrite(led2, HIGH); 
+		digitalWrite(led3, HIGH); 
+	}
 }
