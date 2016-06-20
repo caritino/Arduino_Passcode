@@ -4,10 +4,12 @@ const int botonSubmit = 4;
 
 const int led1 = 12;  // número del pin del LED
 const int led2 = 13;
+const int led3 = 11;
 
 int estadoBoton1 = 0;  // estado del botón (0 ó LOW es apagado y 1 ó HIGH es encendido)
 int estadoBoton2 = 0;
 int estadoBotonSubmit = 0;
+int banderaEstado = 0;
 
 int primerPassword()
 {
@@ -18,12 +20,22 @@ int primerPassword()
 		return 0;
 }
 
+int segundoPassword()
+{
+
+	if(estadoBoton1 == HIGH && estadoBoton2 == LOW)
+		return 1;
+	else
+		return 0;
+}
+
 void setup() {
 	Serial.begin(9600);
 
 	// Se identifica el pin 13 como salida
  	pinMode(led1, OUTPUT);     
- 	pinMode(led2, OUTPUT);    
+ 	pinMode(led2, OUTPUT);
+ 	pinMode(led3, OUTPUT);     
  	// Se identifica el pin 2 como entrada
  	pinMode(boton1, INPUT);  
  	pinMode(boton2, INPUT);  
@@ -40,10 +52,30 @@ void loop(){
 			if(primerPassword() == 1)
 			{
 				digitalWrite(led1, HIGH); 
+				banderaEstado = 1;
 			}
 			else {
-		   		// Si no es asi, se apaga
-		   		digitalWrite(led1, LOW);
+			   	// Si no es asi, se apaga
+			   	digitalWrite(led1, LOW);
+			   	banderaEstado = 0;
+			}
+
+			if(segundoPassword() == 1)
+			{
+				digitalWrite(led2, HIGH); 
+				banderaEstado = 2;
+			}
+			else {
+			   		// Si no es asi, se apaga
+			   	digitalWrite(led2, LOW);
+			   	banderaEstado = 0;
+			}
+
+			if(banderaEstado == 2)
+			{
+			digitalWrite(led1, HIGH); 
+			digitalWrite(led2, HIGH); 
+			digitalWrite(led3, HIGH); 
 			}
 		}
 }
