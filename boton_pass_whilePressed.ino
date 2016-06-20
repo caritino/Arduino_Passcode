@@ -9,9 +9,6 @@ int estadoBoton1 = 0;  // estado del botón (0 ó LOW es apagado y 1 ó HIGH es 
 int estadoBoton2 = 0;
 int estadoBotonSubmit = 0;
 
-int contadorBotonSubmit = 0;
-bool flagBotonSubmit = false;
-
 int primerPassword()
 {
 
@@ -34,47 +31,19 @@ void setup() {
 }
 
 void loop(){
-	if(!flagBotonSubmit){
-
-		// Leemos si el botón en pin2 está abierto o cerrado
 		estadoBoton1 = digitalRead(boton1);
 		estadoBoton2 = digitalRead(boton2);
 		estadoBotonSubmit = digitalRead(botonSubmit);
 
 		if(estadoBotonSubmit == HIGH)
 		{
-			contadorBotonSubmit++;
 			if(primerPassword() == 1)
 			{
 				digitalWrite(led1, HIGH); 
-				flagBotonSubmit == true;
 			}
 			else {
 		   		// Si no es asi, se apaga
 		   		digitalWrite(led1, LOW);
-          		flagBotonSubmit == false;  
-			}
-
-			if(led1 == HIGH && contadorBotonSubmit > 1){
-				digitalWrite(led1, LOW);
-				delay(500);
-				digitalWrite(led1, HIGH);
-				delay(500);
-				digitalWrite(led1, LOW);
-
-				contadorBotonSubmit = 0;
 			}
 		}
-		
-		
-	/*
-	 	if (estadoBoton1 == HIGH) {     
-	   		digitalWrite(led1, HIGH);  
-	 	} 
-	 	else {
-	   		digitalWrite(led1, LOW); 
-	 	}
-	 */
-	}
-
 }
