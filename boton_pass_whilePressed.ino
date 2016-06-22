@@ -68,7 +68,7 @@ void loop(){
       digitalWrite(led2, HIGH); 
       banderaEstado = 2;
     }
-    else if(tercerPassword() == 1 && banderaEstado != 0)
+    else if(tercerPassword() == 1 && banderaEstado != 1)
     {
       digitalWrite(led3, HIGH); 
       banderaEstado = 3;
