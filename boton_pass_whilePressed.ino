@@ -14,64 +14,80 @@ int banderaEstado = 0;
 int primerPassword()
 {
 
-	if(estadoBoton1 == HIGH && estadoBoton2 == HIGH)
-		return 1;
-	else
-		return 0;
+  if(estadoBoton1 == HIGH && estadoBoton2 == HIGH)
+    return 1;
+  else
+    return 0;
 }
 
 int segundoPassword()
 {
 
-	if(estadoBoton1 == HIGH && estadoBoton2 == LOW)
-		return 1;
-	else
-		return 0;
+  if(estadoBoton1 == HIGH && estadoBoton2 == LOW)
+    return 1;
+  else
+    return 0;
+}
+
+int tercerPassword()
+{
+
+  if(estadoBoton1 == LOW && estadoBoton2 == LOW)
+    return 1;
+  else
+    return 0;
 }
 
 void setup() {
-	Serial.begin(9600);
+  Serial.begin(9600);
 
-	// Se identifica el pin 13 como salida
- 	pinMode(led1, OUTPUT);     
- 	pinMode(led2, OUTPUT);
- 	pinMode(led3, OUTPUT);     
- 	// Se identifica el pin 2 como entrada
- 	pinMode(boton1, INPUT);  
- 	pinMode(boton2, INPUT);  
- 	pinMode(botonSubmit, INPUT);     
+  // Se identifica el pin 13 como salida
+  pinMode(led1, OUTPUT);     
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);     
+  // Se identifica el pin 2 como entrada
+  pinMode(boton1, INPUT);  
+  pinMode(boton2, INPUT);  
+  pinMode(botonSubmit, INPUT);     
 }
 
 void loop(){
-	estadoBoton1 = digitalRead(boton1);
-	estadoBoton2 = digitalRead(boton2);
-	estadoBotonSubmit = digitalRead(botonSubmit);
+  estadoBoton1 = digitalRead(boton1);
+  estadoBoton2 = digitalRead(boton2);
+  estadoBotonSubmit = digitalRead(botonSubmit);
 
-	if(estadoBotonSubmit == HIGH)
-	{
-		if(primerPassword() == 1)
-		{
-			digitalWrite(led1, HIGH); 
-			banderaEstado = 1;
-		}
-		else if(segundoPassword() == 1 && banderaEstado != 0)
-		{
-			digitalWrite(led2, HIGH); 
-			banderaEstado = 2;
-		}
-		else
-		{
-			digitalWrite(led1, LOW); 
-			digitalWrite(led2, LOW); 
-			digitalWrite(led3, LOW); 
-			banderaEstado = 0;
-		}
-	}
+  if(estadoBotonSubmit == HIGH)
+  {
+    if(primerPassword() == 1)
+    {
+      digitalWrite(led1, HIGH); 
+      banderaEstado = 1;
+    }
+    else if(segundoPassword() == 1 && banderaEstado != 0)
+    {
+      digitalWrite(led2, HIGH); 
+      banderaEstado = 2;
+    }
+    else if(tercerPassword() == 1 && banderaEstado != 0)
+    {
+      digitalWrite(led3, HIGH); 
+      banderaEstado = 3;
+    }
+    else
+    {
+      digitalWrite(led1, LOW); 
+      digitalWrite(led2, LOW); 
+      digitalWrite(led3, LOW); 
+      banderaEstado = 0;
+    }
+  }
 
-	if(banderaEstado == 2)
-	{
-		digitalWrite(led1, HIGH); 
-		digitalWrite(led2, HIGH); 
-		digitalWrite(led3, HIGH); 
-	}
+/*
+  if(banderaEstado == 2)
+  {
+    digitalWrite(led1, HIGH); 
+    digitalWrite(led2, HIGH); 
+    digitalWrite(led3, HIGH); 
+  }
+*/
 }
